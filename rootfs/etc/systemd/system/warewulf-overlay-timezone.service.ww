@@ -1,0 +1,15 @@
+[Unit]
+Description=Set the Time Zone
+
+[Service]
+Type=oneshot
+{{ if .Tags.timezone -}}
+ExecStart=/usr/bin/timedatectl set-timezone {{ .Tags.timezone }}
+{{ else }}
+ExecStart=/usr/bin/timedatectl set-timezone UTC
+{{ end -}}
+RemainAfterExit=yes
+
+[Install]
+WantedBy=sysinit.target
+
